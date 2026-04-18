@@ -1,1 +1,1564 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sparked</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══ SUNNY DAY PALETTE ══
+   #FFBF00 Amber      — primary energy, CTAs, hero
+   #807040 Warm Olive — grounding, text, depth
+   #007EFF Sky Blue   — focus screens, interactive
+   #2400FF Deep Blue  — bold accents, rewards
+*/
+:root{
+  --amber:#FFBF00; --amber2:#FFD54F; --amber-bg:#FFFBEA; --amber-border:#FFE57A;
+  --olive:#807040;  --olive-bg:#F5F0E0; --olive-border:#C8B880;
+  --sky:#007EFF;    --sky-bg:#EAF3FF;   --sky-border:#90C8FF;
+  --deep:#2400FF;   --deep-bg:#EEEAFF;  --deep-border:#9890FF;
+  --lav:#C4A8E8;     --lav-bg:#F5F0FF;   --lav-border:#DDD0F8;
+  --cream:#FEFCF5;  --cream2:#F5F0E0;   --card:#FFFFFF;
+  --border:#EAE0C8; --border2:#D4C8A8;
+  --ink:#1A4A7A;    --ink2:#2A6090;     --muted:#7A9AAA;
+  --r:20px; --rs:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:#D8EEFF;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(255,191,0,.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(0,126,255,.1) 0%, transparent 50%);
+  display:flex;justify-content:center;align-items:center;
+  min-height:100vh;font-family:'Quicksand',sans-serif;
+  font-size:14px;line-height:1.65;overflow:hidden
+}
+.phone{
+  width:390px;height:844px;background:var(--cream);
+  border-radius:44px;overflow:hidden;position:relative;
+  box-shadow:
+    0 0 0 1.5px rgba(255,191,0,.5),
+    0 0 0 8px #A8D4F5,
+    0 40px 100px rgba(180,140,0,.25),
+    0 0 60px rgba(255,191,0,.15);
+}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transition:opacity .3s;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.on{opacity:1;pointer-events:all}
+
+/* ══════════════════════════
+SPLASH — full personality
+══════════════════════════ */
+#splash{
+background:linear-gradient(160deg,#FFFDE8 0%,#FFF3B0 50%,#FFE870 100%);
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+padding:44px 36px;
+overflow:hidden;
+}
+/* Subtle warm grain */
+#splash::before{
+content:’’;position:absolute;inset:0;
+background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.65’ numOctaves=‘3’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.025’/%3E%3C/svg%3E”);
+opacity:.5;pointer-events:none;z-index:0;
+}
+.sp-glow1{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,191,0,.4) 0%,transparent 70%);top:-80px;left:-60px;pointer-events:none}
+.sp-glow2{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(0,126,255,.18) 0%,transparent 70%);bottom:80px;right:-40px;pointer-events:none}
+/* Decorative tilted shapes */
+.sp-shape1{
+position:absolute;width:90px;height:90px;
+background:var(–amber);border-radius:22px;
+top:60px;right:30px;
+transform:rotate(18deg);opacity:.35;
+}
+.sp-shape2{
+position:absolute;width:50px;height:50px;
+border:3px solid var(–sky);border-radius:50%;
+bottom:200px;left:24px;opacity:.4;
+animation:float 4s ease-in-out infinite;
+}
+.sp-shape3{
+position:absolute;width:30px;height:30px;
+background:var(–lav,#C4A8E8);border-radius:8px;
+bottom:260px;right:50px;
+transform:rotate(30deg);opacity:.45;
+animation:float 5s ease-in-out infinite reverse;
+}
+.sp-shape4{
+position:absolute;width:60px;height:60px;
+background:var(–lav,#C4A8E8);border-radius:50%;
+top:140px;left:20px;
+opacity:.18;
+animation:float 6s ease-in-out 1s infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(10deg)}}
+
+.sp-eyebrow{
+position:relative;z-index:2;
+font-family:‘Caveat’,cursive;font-size:17px;font-weight:600;
+color:rgba(26,74,122,.65);letter-spacing:1px;
+margin-bottom:16px;text-align:center;
+}
+.sp-logo{position:relative;z-index:2;text-align:center;margin-bottom:6px}
+.sp-logo h1{
+font-family:‘Nunito’,sans-serif;font-size:72px;font-weight:900;
+line-height:.9;letter-spacing:-3px;
+color:var(–ink);
+text-shadow:0 4px 20px rgba(255,191,0,.4);
+}
+.sp-tagline{
+position:relative;z-index:2;
+font-family:‘Caveat’,cursive;font-size:21px;font-weight:600;
+color:#1A4A7A;
+text-align:center;margin-bottom:44px;
+letter-spacing:.5px;
+}
+/* Decorative line under logo */
+.sp-rule{
+width:48px;height:3px;
+background:linear-gradient(90deg,var(–amber),var(–sky));
+border-radius:3px;margin:10px auto 28px;
+position:relative;z-index:2;
+}
+.sp-actions{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;gap:12px}
+.btn-primary{
+width:100%;padding:18px;
+background:var(–amber);color:#1A4A7A;
+border:none;border-radius:50px;
+font-family:‘Nunito’,sans-serif;font-size:16px;font-weight:900;
+cursor:pointer;letter-spacing:.3px;
+box-shadow:0 6px 28px rgba(255,191,0,.45),0 2px 8px rgba(0,0,0,.12);
+transition:transform .2s,box-shadow .2s;
+position:relative;overflow:hidden;
+}
+.btn-primary::after{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent 60%)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(255,191,0,.5)}
+.btn-ghost-dark{
+width:100%;padding:16px;
+background:rgba(255,255,255,.6);color:#1A4A7A;
+border:1.5px solid rgba(128,112,64,.25);border-radius:50px;
+font-size:14px;font-weight:600;cursor:pointer;
+font-family:‘Quicksand’,sans-serif;
+transition:all .2s;backdrop-filter:blur(8px);
+}
+.btn-ghost-dark:hover{border-color:var(–amber);color:var(–ink);background:rgba(255,255,255,.85)}
+.sp-skip{
+text-align:center;font-family:‘Caveat’,cursive;
+font-size:20px;font-weight:600;
+color:#1A4A7A;
+cursor:pointer;
+padding:14px 24px;
+background:rgba(255,255,255,.5);
+border:1.5px solid rgba(26,74,122,.2);
+border-radius:50px;
+transition:all .2s;
+position:relative;z-index:2;
+}
+.sp-skip:hover{background:white;border-color:var(–amber);color:var(–ink);transform:translateY(-1px)}
+
+/* ══════════════════════════
+QUIZ
+══════════════════════════ */
+#quiz{background:var(–cream);padding-bottom:40px}
+.qz-bar{
+display:flex;align-items:center;justify-content:space-between;
+padding:16px 22px;
+}
+.bk{
+width:38px;height:38px;background:white;
+border:1.5px solid var(–border);border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+cursor:pointer;color:var(–ink);font-size:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.sqz{font-size:13px;color:var(–muted);cursor:pointer;font-weight:600;font-family:‘Caveat’,cursive;font-size:17px}
+.sqz:hover{color:var(–sky)}
+.qprog-wrap{padding:0 22px 6px}
+.qprog-track{height:4px;background:var(–border);border-radius:4px}
+.qprog-fill{height:100%;background:linear-gradient(90deg,var(–amber),var(–sky));border-radius:4px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.qctr{font-size:10px;color:var(–muted);padding:6px 22px 16px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.qbody{padding:0 22px}
+.qq{font-family:‘Nunito’,sans-serif;font-size:26px;font-weight:900;color:var(–ink);line-height:1.2;margin-bottom:6px}
+.qh{font-size:13px;color:var(–muted);margin-bottom:22px;line-height:1.7}
+.qopts{display:flex;flex-direction:column;gap:10px}
+.qopt{
+background:white;border:2px solid var(–border);
+border-radius:16px;padding:14px 16px;
+display:flex;align-items:center;gap:12px;
+cursor:pointer;transition:all .2s;
+font-size:14px;font-weight:600;color:var(–ink);
+box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.qopt:hover{border-color:var(–amber);background:var(–amber-bg);transform:translateX(4px)}
+.qopt.sl{border-color:var(–amber);background:var(–amber-bg);color:var(–ink2)}
+.qopt.sl::before{content:‘✓’;margin-left:auto;color:var(–amber);font-weight:900}
+.qi{font-size:22px;flex-shrink:0}
+.qbtn{
+width:100%;margin-top:24px;padding:16px;
+background:#1A4A7A;color:var(–amber);
+border:none;border-radius:50px;
+font-family:‘Nunito’,sans-serif;font-size:15px;font-weight:900;
+cursor:pointer;box-shadow:0 6px 20px rgba(26,74,122,.3);
+transition:transform .2s;
+}
+.qbtn:hover{transform:translateY(-2px)}
+.qs{display:none}.qs.on{display:block}
+
+/* ══════════════════════════
+READY
+══════════════════════════ */
+#ready{
+background:#1A4A7A;
+display:flex;flex-direction:column;align-items:center;
+justify-content:center;padding:44px;text-align:center;
+}
+.ready-ring{
+width:110px;height:110px;border-radius:50%;
+background:conic-gradient(var(–amber) 0deg,var(–sky) 180deg,var(–deep) 360deg);
+position:relative;margin-bottom:28px;
+animation:spin 5s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ready-ring::after{
+content:‘✦’;position:absolute;inset:8px;
+background:#1A4A7A;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:28px;color:var(–amber);
+animation:spin 5s linear infinite reverse;
+line-height:94px;text-align:center;
+}
+.ready-h{
+font-family:‘Nunito’,sans-serif;font-size:36px;font-weight:900;
+color:white;line-height:1.15;margin-bottom:12px;
+}
+.ready-h span{color:var(–amber)}
+.ready-sub{
+font-family:‘Caveat’,cursive;font-size:19px;
+color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:36px;
+}
+.btn-ready{
+padding:16px 40px;background:var(–amber);color:#1A4A7A;
+border:none;border-radius:50px;
+font-family:‘Nunito’,sans-serif;font-size:15px;font-weight:900;
+cursor:pointer;box-shadow:0 6px 28px rgba(255,191,0,.4);
+transition:transform .2s;
+}
+.btn-ready:hover{transform:scale(1.04)}
+
+/* ══════════════════════════
+HOME
+══════════════════════════ */
+#home{background:var(–cream);padding-bottom:90px}
+.home-hdr{
+padding:14px 20px 12px;
+background:rgba(254,252,245,.95);
+position:sticky;top:0;z-index:50;
+backdrop-filter:blur(16px);
+border-bottom:1.5px solid var(–border);
+}
+.home-hdr-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.wordmark{font-family:‘Nunito’,sans-serif;font-size:24px;font-weight:900;color:var(–amber)}
+.hdr-btns{display:flex;gap:8px}
+.hbtn{
+width:36px;height:36px;background:white;
+border:1.5px solid var(–border);border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:16px;cursor:pointer;
+box-shadow:0 2px 6px rgba(0,0,0,.06);transition:border-color .2s;
+}
+.hbtn:hover{border-color:var(–amber)}
+.searchbar{
+display:flex;align-items:center;gap:9px;
+background:white;border:1.5px solid var(–border);
+border-radius:14px;padding:10px 14px;
+box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.searchbar input{background:none;border:none;outline:none;font-family:‘Quicksand’,sans-serif;font-size:13px;color:var(–ink);flex:1}
+.searchbar input::placeholder{color:var(–muted)}
+
+/* PILLS */
+.pills-row{display:flex;gap:8px;padding:12px 20px;overflow-x:auto;scrollbar-width:none}
+.pills-row::-webkit-scrollbar{display:none}
+.pill{
+white-space:nowrap;padding:7px 16px;border-radius:50px;
+font-size:12px;font-weight:700;cursor:pointer;
+border:1.5px solid var(–border);background:white;
+color:var(–muted);transition:all .2s;
+font-family:‘Quicksand’,sans-serif;
+}
+.pill.on{background:#1A4A7A;border-color:var(–ink);color:var(–amber)}
+
+/* HERO CARD — full bleed with bold personality */
+.hero-card{
+margin:4px 16px 18px;
+border-radius:24px;overflow:hidden;
+background:#1A4A7A;
+position:relative;cursor:pointer;
+min-height:220px;
+box-shadow:0 8px 32px rgba(26,74,122,.25);
+transition:transform .2s;
+}
+.hero-card:hover{transform:scale(1.01)}
+/* Amber blob */
+.hero-blob{
+position:absolute;width:220px;height:220px;
+background:radial-gradient(circle,rgba(255,191,0,.3),transparent 70%);
+top:-40px;right:-40px;border-radius:50%;pointer-events:none;
+}
+.hero-blob2{
+position:absolute;width:140px;height:140px;
+background:radial-gradient(circle,rgba(0,126,255,.2),transparent 70%);
+bottom:-20px;left:20px;border-radius:50%;pointer-events:none;
+}
+.hero-emoji-bg{
+position:absolute;right:14px;bottom:12px;
+font-size:88px;opacity:.18;transform:rotate(-8deg);
+pointer-events:none;line-height:1;
+}
+.hero-inner{padding:22px 20px;position:relative;z-index:2}
+.hero-badge{
+display:inline-flex;align-items:center;gap:5px;
+background:rgba(255,191,0,.15);
+border:1px solid rgba(255,191,0,.3);
+color:var(–amber);
+font-family:‘Caveat’,cursive;font-size:14px;font-weight:600;
+padding:4px 13px;border-radius:50px;margin-bottom:14px;
+}
+.hero-title{
+font-family:‘Nunito’,sans-serif;font-size:26px;font-weight:900;
+color:white;line-height:1.1;margin-bottom:8px;
+}
+.hero-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:14px}
+.hero-chips{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.hchip{
+font-size:11px;font-weight:600;
+color:rgba(255,255,255,.5);
+background:rgba(255,255,255,.08);
+padding:3px 10px;border-radius:50px;
+}
+.hero-btn{
+display:inline-flex;align-items:center;gap:8px;
+background:var(–amber);color:#1A4A7A;
+padding:10px 22px;border-radius:50px;
+font-family:‘Nunito’,sans-serif;font-size:13px;font-weight:900;
+border:none;cursor:pointer;
+box-shadow:0 4px 16px rgba(255,191,0,.4);
+transition:transform .2s;
+}
+.hero-btn:hover{transform:scale(1.04)}
+
+/* QUICK ACTIONS */
+.quick-row{display:flex;gap:10px;padding:0 16px;margin-bottom:20px}
+.quick-card{
+flex:1;background:white;border:1.5px solid var(–border);
+border-radius:18px;padding:14px;
+cursor:pointer;transition:all .2s;
+display:flex;align-items:center;gap:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.quick-card:hover{border-color:var(–amber);background:var(–amber-bg);transform:translateY(-2px)}
+.qic{font-size:24px}.qlb{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(–muted);font-weight:700}.qtxt{font-family:‘Nunito’,sans-serif;font-size:14px;font-weight:800;color:var(–ink)}
+
+/* SECTION HEADERS */
+.sec-hdr{display:flex;justify-content:space-between;align-items:center;padding:0 20px;margin-bottom:13px}
+.sec-title{font-family:‘Nunito’,sans-serif;font-size:17px;font-weight:900;color:var(–ink)}
+.sec-all{font-size:12px;color:var(–olive);font-weight:700;cursor:pointer;font-family:‘Caveat’,cursive;font-size:16px}
+
+/* HORIZONTAL SCROLL */
+.hscroll{display:flex;gap:12px;padding:0 20px 22px;overflow-x:auto;scrollbar-width:none}
+.hscroll::-webkit-scrollbar{display:none}
+
+/* PROJECT CARDS — more personality */
+.pcard{
+min-width:158px;background:white;
+border:1.5px solid var(–border);
+border-radius:20px;overflow:hidden;
+cursor:pointer;flex-shrink:0;
+transition:transform .2s,box-shadow .2s;
+box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+.pcard:hover{transform:translateY(-5px) rotate(-1deg);box-shadow:0 12px 28px rgba(0,0,0,.12)}
+.pcard-img{width:100%;height:106px;display:flex;align-items:center;justify-content:center;font-size:44px;position:relative}
+.pcard-body{padding:10px 12px 12px}
+.ptags{display:flex;gap:5px;margin-bottom:7px;flex-wrap:wrap}
+.pt{font-size:9px;font-weight:800;padding:3px 8px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px}
+.pt-a{background:var(–amber-bg);color:#8B5E00}
+.pt-s{background:var(–sky-bg);color:#0044AA}
+.pt-d{background:var(–deep-bg);color:#1800AA}
+.pt-o{background:var(–olive-bg);color:var(–olive)}
+.pt-m{background:var(–cream2);color:var(–muted)}
+.pcard-title{font-size:13px;font-weight:700;color:var(–ink);line-height:1.3;margin-bottom:7px;font-family:‘Nunito’,sans-serif}
+.pcard-meta{display:flex;gap:8px}.pcard-mi{font-size:10px;color:var(–muted)}
+
+/* WIDE CARDS */
+.wcard{
+background:white;border:1.5px solid var(–border);
+border-radius:20px;overflow:hidden;cursor:pointer;
+display:flex;margin:0 16px 10px;
+transition:all .2s;box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.wcard:hover{box-shadow:0 8px 24px rgba(0,0,0,.1);transform:scale(1.005)}
+.wcard-img{width:86px;height:86px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:36px}
+.wcard-body{padding:12px 14px;flex:1}
+.wcard-title{font-size:13px;font-weight:700;color:var(–ink);margin-bottom:3px;font-family:‘Nunito’,sans-serif}
+.wcard-sub{font-size:11px;color:var(–muted);margin-bottom:6px}
+
+/* CARD GRADIENTS — warmer, more painterly */
+.g1{background:linear-gradient(135deg,#FFF8D0,#FFE870)}
+.g2{background:linear-gradient(135deg,#E8F5FF,#C0DAFF)}
+.g3{background:linear-gradient(135deg,#EEEAFF,#C8C0FF)}
+.g4{background:linear-gradient(135deg,#FFF5E0,#FFE0A0)}
+.g5{background:linear-gradient(135deg,#E8F8F0,#BCEAD8)}
+.g6{background:linear-gradient(135deg,#FFF0F8,#FFD0E8)}
+.g7{background:linear-gradient(135deg,#FFFCE0,#FFF0A0)}
+.g8{background:linear-gradient(135deg,#E8F0FF,#C0D4FF)}
+.g9{background:linear-gradient(135deg,#F5F0FF,#E0D0FF)}
+.g10{background:linear-gradient(135deg,#EEE8FF,#D8C8FF)}
+
+/* ══════════════════════════
+PROJECT DETAIL
+══════════════════════════ */
+#project{background:var(–sky-bg);padding-bottom:100px}
+.proj-hero{
+width:100%;height:240px;
+display:flex;align-items:center;justify-content:center;
+font-size:84px;position:relative;overflow:hidden;
+}
+.proj-back,.proj-save{
+position:absolute;width:38px;height:38px;
+background:rgba(255,255,255,.9);
+border:1px solid rgba(255,255,255,.5);
+border-radius:50%;display:flex;align-items:center;
+justify-content:center;cursor:pointer;
+font-size:15px;color:var(–ink);
+backdrop-filter:blur(12px);top:14px;
+box-shadow:0 2px 10px rgba(0,0,0,.12);
+}
+.proj-back{left:14px}.proj-save{right:14px}
+.proj-body{padding:18px}
+.proj-title{font-family:‘Nunito’,sans-serif;font-size:26px;font-weight:900;color:var(–ink);line-height:1.15;margin-bottom:13px}
+.proj-stats{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
+.proj-stats::-webkit-scrollbar{display:none}
+.stat-chip{background:white;border:1.5px solid var(–sky-border);border-radius:14px;padding:9px 14px;flex-shrink:0;text-align:center;box-shadow:0 2px 8px rgba(0,126,255,.08)}
+.stat-v{font-family:‘Nunito’,sans-serif;font-size:13px;font-weight:900;color:var(–ink)}.stat-l{font-size:9px;color:var(–muted);margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
+.sec-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(–sky);margin-bottom:10px}
+.mat-list{background:white;border:1.5px solid var(–sky-border);border-radius:18px;padding:4px 0;margin-bottom:13px;box-shadow:0 3px 12px rgba(0,126,255,.08)}
+.mat-row{display:flex;align-items:center;gap:11px;padding:12px 14px;border-bottom:1px solid var(–border)}
+.mat-row:last-child{border-bottom:none}
+.mat-chk{width:22px;height:22px;border:2px solid var(–border);border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;font-size:12px}
+.mat-chk.on{background:var(–sky);border-color:var(–sky);color:white}
+.mat-name{flex:1;font-size:13px;color:var(–ink);font-weight:500;line-height:1.6}.mat-name.done{text-decoration:line-through;color:var(–muted)}
+.mat-buy{font-size:11px;color:var(–sky);font-weight:700;cursor:pointer}
+.cost-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 12px;border-top:1px solid var(–border)}
+.cost-lbl{font-size:12px;color:var(–muted)}.cost-val{font-family:‘Nunito’,sans-serif;font-size:14px;font-weight:900;color:var(–ink)}
+.shop-ghost{
+width:100%;background:var(–sky-bg);color:var(–sky);
+border:1.5px solid var(–sky-border);padding:13px;
+border-radius:16px;font-size:13px;font-weight:700;
+cursor:pointer;margin-bottom:13px;
+display:flex;align-items:center;justify-content:center;gap:7px;
+transition:all .2s;font-family:‘Quicksand’,sans-serif;
+}
+.shop-ghost:hover{background:var(–sky);color:white}
+.steps-list{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.step-item{
+background:white;border:1.5px solid var(–sky-border);
+border-radius:14px;padding:13px 14px;
+display:flex;gap:12px;
+box-shadow:0 2px 8px rgba(0,126,255,.06);
+}
+.step-num{
+width:26px;height:26px;border-radius:50%;
+background:var(–sky);color:white;
+display:flex;align-items:center;justify-content:center;
+font-size:12px;font-weight:900;flex-shrink:0;
+font-family:‘Nunito’,sans-serif;
+}
+.step-txt{font-size:13px;color:var(–ink2);line-height:1.75;padding-top:3px}
+.made-btn{
+width:100%;padding:17px;
+background:#1A4A7A;color:var(–amber);
+border:none;border-radius:50px;
+font-family:‘Nunito’,sans-serif;font-size:15px;font-weight:900;
+cursor:pointer;
+box-shadow:0 6px 24px rgba(26,74,122,.25);
+display:flex;align-items:center;justify-content:center;gap:9px;
+transition:transform .2s;
+}
+.made-btn:hover{transform:scale(1.02)}
+
+/* ══════════════════════════
+SHOPPING
+══════════════════════════ */
+#shopping{background:var(–sky-bg);padding-bottom:90px}
+.shop-title{font-family:‘Nunito’,sans-serif;font-size:26px;font-weight:900;color:var(–ink);margin-bottom:3px}
+.shop-grp{margin:0 16px 18px}
+.shop-grp-name{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(–sky);margin-bottom:9px}
+.shop-box{background:white;border:1.5px solid var(–sky-border);border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,126,255,.08)}
+.shop-row{display:flex;align-items:center;gap:11px;padding:12px 14px;border-bottom:1px solid var(–border)}
+.shop-row:last-child{border-bottom:none}
+.s-chk{width:22px;height:22px;border:2px solid var(–border);border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;font-size:12px}
+.s-chk.on{background:var(–sky);border-color:var(–sky);color:white}
+.s-name{flex:1;font-size:13px;color:var(–ink);font-weight:500}.s-name.done{text-decoration:line-through;color:var(–muted)}
+.s-price{font-size:12px;color:var(–muted);margin-right:5px}.s-buy{font-size:11px;color:var(–sky);font-weight:700;cursor:pointer}
+.total-bar{
+background:white;border:1.5px solid var(–sky-border);
+margin:0 16px 12px;border-radius:18px;
+padding:15px 18px;display:flex;justify-content:space-between;align-items:center;
+box-shadow:0 3px 12px rgba(0,126,255,.08);
+}
+.total-lbl{font-size:12px;color:var(–muted)}.total-val{font-family:‘Nunito’,sans-serif;font-size:26px;font-weight:900;color:var(–ink)}
+.shop-all-btn{
+width:calc(100% - 32px);margin:0 16px;
+background:var(–sky);color:white;border:none;
+padding:15px;border-radius:50px;
+font-family:‘Nunito’,sans-serif;font-size:14px;font-weight:900;
+cursor:pointer;box-shadow:0 5px 20px rgba(0,126,255,.3);
+}
+
+/* ══════════════════════════
+REWARDS
+══════════════════════════ */
+#rewards{background:var(–lav-bg,#F5F0FF);padding-bottom:90px}
+.rew-hero{
+padding:18px 18px 24px;
+background:linear-gradient(160deg,#1A3A7A,#3A6AB0);
+border-bottom:1px solid var(–deep-border);
+position:relative;overflow:hidden;
+}
+.rew-glow{position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(196,168,232,.4),transparent 70%);right:-30px;top:-30px}
+.rew-title{font-family:‘Nunito’,sans-serif;font-size:24px;font-weight:900;color:white;position:relative;z-index:2;margin-bottom:4px}
+.rew-sub{font-size:17px;color:rgba(255,255,255,.45);position:relative;z-index:2;margin-bottom:15px;font-family:‘Caveat’,cursive;font-weight:600}
+.pts-card{
+background:linear-gradient(135deg,#9060D0,#C090F0);
+border-radius:18px;padding:17px 18px;
+display:flex;justify-content:space-between;align-items:center;
+position:relative;z-index:2;
+box-shadow:0 6px 24px rgba(150,80,220,.35);
+}
+.pts-num{font-family:‘Nunito’,sans-serif;font-size:42px;font-weight:900;color:white;line-height:1}
+.pts-lbl{font-size:10px;color:rgba(255,255,255,.65);margin-top:3px}.pts-ico{font-size:46px}
+.rew-body{padding:18px}
+.rew-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(–lav,#C4A8E8);margin-bottom:10px;-webkit-text-fill-color:var(–lav,#C4A8E8)}
+.giveaway-box{background:white;border:1.5px solid var(–lav-border,#DDD0F8);border-radius:18px;padding:16px;margin-bottom:18px;box-shadow:0 3px 12px rgba(196,168,232,.1)}
+.gw-badge{font-family:‘Caveat’,cursive;font-size:15px;font-weight:700;color:#9060D0;margin-bottom:5px}
+.gw-title{font-family:‘Nunito’,sans-serif;font-size:15px;font-weight:800;color:var(–ink);margin-bottom:10px}
+.gw-bar{height:6px;background:var(–lav-border,#DDD0F8);border-radius:6px;margin-bottom:6px}
+.gw-fill{height:100%;width:62%;background:linear-gradient(90deg,var(–lav,#C4A8E8),var(–sky));border-radius:6px}
+.gw-meta{display:flex;justify-content:space-between;font-size:11px;color:var(–muted)}
+.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}
+.badge-cell{background:white;border:1.5px solid var(–lav-border,#DDD0F8);border-radius:14px;padding:13px 9px;text-align:center;box-shadow:0 2px 8px rgba(196,168,232,.1)}
+.badge-ico{font-size:24px;margin-bottom:5px}.badge-name{font-size:10px;font-weight:700;color:var(–ink)}.badge-cell.locked{opacity:.3;filter:grayscale(1)}
+.earn-list{background:white;border:1.5px solid var(–lav-border,#DDD0F8);border-radius:18px;overflow:hidden;margin-bottom:18px;box-shadow:0 3px 12px rgba(196,168,232,.1)}
+.earn-row{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;border-bottom:1px solid var(–border);font-size:13px;color:var(–ink);font-weight:500}
+.earn-row:last-child{border-bottom:none}.earn-pts{font-family:‘Nunito’,sans-serif;font-size:13px;font-weight:900;color:#9060D0}
+.milestone-list{display:flex;flex-direction:column;gap:8px}
+.ms{background:white;border:1.5px solid var(–border);border-radius:14px;padding:13px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.ms.done{border-left:3px solid var(–lav,#C4A8E8)}.ms.current{border-left:3px solid var(–amber);background:var(–amber-bg)}.ms.locked{border-left:3px solid var(–border);opacity:.45}
+.ms-ico{font-size:24px;flex-shrink:0}.ms-info{flex:1}.ms-title{font-size:13px;font-weight:700;color:var(–ink);font-family:‘Nunito’,sans-serif}.ms-reward{font-size:11px;color:var(–muted);margin-top:2px;line-height:1.6}
+.ms-badge{font-size:9px;font-weight:800;padding:3px 9px;border-radius:50px}
+.ms-badge.d{background:var(–lav-bg,#F5F0FF);color:#9060D0}.ms-badge.c{background:var(–amber-bg);color:#8B5E00}.ms-badge.l{background:var(–cream2);color:var(–muted)}
+
+/* ══════════════════════════
+LEADERBOARD
+══════════════════════════ */
+#leaderboard{background:var(–olive-bg);padding-bottom:90px}
+.lb-hdr{
+padding:18px 18px 18px;
+background:linear-gradient(160deg,white,var(–olive-bg));
+border-bottom:1.5px solid var(–olive-border);
+position:relative;overflow:hidden;
+}
+.lb-glow{position:absolute;background:radial-gradient(circle,rgba(128,112,64,.15),transparent 60%);width:180px;height:180px;right:-20px;top:-20px}
+.lb-title{font-family:‘Nunito’,sans-serif;font-size:24px;font-weight:900;color:var(–ink);position:relative;z-index:2;margin-bottom:3px}
+.lb-sub{font-size:12px;color:var(–muted);margin-bottom:14px;position:relative;z-index:2}
+.lb-tabs{display:flex;gap:8px;position:relative;z-index:2}
+.lb-tab{padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid var(–olive-border);color:var(–olive);background:white;font-family:‘Nunito’,sans-serif;transition:all .2s}
+.lb-tab.on{background:var(–olive);border-color:var(–olive);color:white}
+.prize-bar{margin:14px 16px;border-radius:18px;background:linear-gradient(135deg,var(–amber-bg),#FFF5E0);border:1.5px solid var(–amber-border);padding:13px 16px;display:flex;align-items:center;gap:11px;box-shadow:0 3px 12px rgba(255,191,0,.12)}
+.prize-ico{font-size:28px}.prize-t{font-size:12px;font-weight:700;color:var(–ink);font-family:‘Nunito’,sans-serif}.prize-s{font-size:11px;color:var(–muted)}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:4px 18px 6px}
+.pod{display:flex;flex-direction:column;align-items:center;gap:5px}
+.pod.p1{order:2}.pod.p2{order:1}.pod.p3{order:3}
+.pod-av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid transparent;position:relative;width:50px;height:50px;background:white;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.pod.p1 .pod-av{width:64px;height:64px;font-size:25px;border-color:var(–amber);box-shadow:0 4px 16px rgba(255,191,0,.35)}
+.pod.p2 .pod-av{border-color:var(–sky)}
+.pod.p3 .pod-av{border-color:var(–lav,#C4A8E8)}
+.pod-crown{position:absolute;top:-14px;font-size:15px}
+.pod-name{font-size:10px;font-weight:700;color:var(–ink)}.pod-pts{font-size:9px;color:var(–muted)}
+.pod-block{border-radius:8px 8px 0 0;width:72px;display:flex;align-items:center;justify-content:center;font-family:‘Nunito’,sans-serif;font-size:18px;font-weight:900}
+.pod.p1 .pod-block{height:64px;background:linear-gradient(135deg,var(–amber),#E0A000);color:var(–ink)}
+.pod.p2 .pod-block{height:44px;background:linear-gradient(135deg,var(–sky),#0055CC);color:white}
+.pod.p3 .pod-block{height:34px;background:linear-gradient(135deg,var(–lav,#C4A8E8),#A070D0);color:white}
+.lb-list{padding:10px 16px;display:flex;flex-direction:column;gap:8px}
+.lb-row{background:white;border:1.5px solid var(–border);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.lb-row.you{border-color:var(–amber-border);background:var(–amber-bg)}
+.lb-rank{font-family:‘Nunito’,sans-serif;font-size:14px;font-weight:900;color:var(–muted);width:22px;text-align:center}
+.lb-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.lb-name{font-size:12px;font-weight:700;color:var(–ink);font-family:‘Nunito’,sans-serif}
+.lb-made{font-size:10px;color:var(–muted)}.lb-score{font-family:‘Nunito’,sans-serif;font-size:13px;font-weight:900;color:var(–sky)}
+.you-badge{font-size:8px;background:var(–amber);color:#1A4A7A;padding:2px 6px;border-radius:50px;font-weight:900;margin-left:5px}
+.lb-climb{text-align:center;padding:10px 0;font-size:16px;color:var(–muted);font-family:‘Caveat’,cursive}.lb-climb span{color:var(–ink);font-weight:700}
+
+/* ══════════════════════════
+COMMUNITY
+══════════════════════════ */
+#community{background:var(–cream);padding-bottom:90px}
+.comm-hdr{
+padding:14px 20px 11px;
+background:rgba(254,252,245,.96);
+position:sticky;top:0;z-index:50;
+border-bottom:1.5px solid var(–border);
+backdrop-filter:blur(16px);
+}
+.comm-title{font-family:‘Nunito’,sans-serif;font-size:22px;font-weight:900;color:var(–ink);margin-bottom:3px}
+.comm-sub{font-family:‘Caveat’,cursive;font-size:16px;color:var(–muted);margin-bottom:11px;line-height:1.5}
+.comm-tabs{display:flex;gap:8px}
+.comm-tab{padding:6px 14px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid var(–border);color:var(–muted);background:white;font-family:‘Nunito’,sans-serif;transition:all .2s}
+.comm-tab.on{background:#1A4A7A;border-color:#1A4A7A;color:white}
+.fab{
+position:absolute;bottom:88px;right:16px;z-index:100;
+width:52px;height:52px;border-radius:50%;
+background:var(–amber);color:#1A4A7A;
+border:none;font-size:24px;cursor:pointer;
+box-shadow:0 5px 22px rgba(255,191,0,.45);
+display:flex;align-items:center;justify-content:center;
+transition:transform .2s;font-weight:900;
+}
+.fab:hover{transform:scale(1.12) rotate(90deg)}
+.post-card{
+background:white;border:1.5px solid var(–border);
+margin:0 16px 12px;border-radius:20px;overflow:hidden;
+cursor:pointer;transition:all .2s;
+box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+.post-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.1);transform:translateY(-2px)}
+.post-img{width:100%;height:146px;display:flex;align-items:center;justify-content:center;font-size:56px}
+.post-body{padding:12px 14px}
+.post-user{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.post-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.post-uname{font-size:12px;font-weight:700;color:var(–ink);flex:1;font-family:‘Nunito’,sans-serif}
+.post-time{font-size:10px;color:var(–muted)}
+.featured-tag{font-size:8px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:var(–amber-bg);color:#8B5E00;padding:2px 8px;border-radius:50px;border:1px solid var(–amber-border)}
+.post-title{font-size:14px;font-weight:700;color:var(–ink);margin-bottom:4px;font-family:‘Nunito’,sans-serif}
+.post-desc{font-size:12px;color:var(–ink2);line-height:1.75;margin-bottom:10px}
+.post-actions{display:flex;gap:14px}
+.pact{display:flex;align-items:center;gap:4px;font-size:12px;color:var(–muted);cursor:pointer;font-weight:600;transition:color .2s}
+.pact:hover{color:var(–ink)}.pact.liked{color:var(–sky)}.pact.makeit{color:var(–olive)}
+
+/* ══════════════════════════
+BUSINESS / EARN
+══════════════════════════ */
+#business{background:var(–amber-bg);padding-bottom:90px}
+.biz-hdr{
+padding:14px 20px 12px;
+background:rgba(255,251,234,.96);
+position:sticky;top:0;z-index:50;
+border-bottom:1.5px solid var(–amber-border);
+backdrop-filter:blur(16px);
+}
+.biz-title{font-family:‘Nunito’,sans-serif;font-size:22px;font-weight:900;color:var(–ink);margin-bottom:3px}
+.biz-sub{font-size:12px;color:var(–muted);margin-bottom:9px}
+.biz-tag-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(128,112,64,.1);border:1.5px solid var(–olive-border);color:var(–olive);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:50px;font-family:‘Quicksand’,sans-serif}
+.biz-body{padding:16px 16px}
+.biz-intro-card{background:white;border:1.5px solid var(–amber-border);border-radius:20px;padding:17px;margin-bottom:20px;box-shadow:0 4px 16px rgba(255,191,0,.12)}
+.biz-intro-title{font-family:‘Caveat’,cursive;font-size:22px;font-weight:700;color:var(–ink);margin-bottom:6px}
+.biz-intro-body{font-size:13px;color:var(–ink2);line-height:1.8}
+.ways-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(–olive);margin-bottom:6px}
+.ways-nudge{font-family:‘Caveat’,cursive;font-size:17px;color:var(–ink2);margin-bottom:14px;line-height:1.5}
+.earn-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+.earn-card{background:white;border:1.5px solid var(–amber-border);border-radius:20px;padding:16px 17px;display:flex;gap:14px;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(255,191,0,.08)}
+.earn-card:hover{box-shadow:0 8px 24px rgba(255,191,0,.18);transform:translateY(-2px)}
+.earn-ico{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.earn-ico.a{background:var(–amber-bg);border:1.5px solid var(–amber-border)}
+.earn-ico.s{background:var(–sky-bg);border:1.5px solid var(–sky-border)}
+.earn-ico.d{background:var(–deep-bg);border:1.5px solid var(–deep-border)}
+.earn-ico.o{background:var(–olive-bg);border:1.5px solid var(–olive-border)}
+.earn-info{flex:1}
+.earn-title{font-family:‘Nunito’,sans-serif;font-size:14px;font-weight:800;color:var(–ink);margin-bottom:3px}
+.earn-desc{font-size:12px;color:var(–ink2);line-height:1.75;margin-bottom:8px}
+.earn-footer{display:flex;align-items:center;justify-content:space-between}
+.earn-range{font-size:11px;color:var(–olive);font-weight:700}
+.diff-tag{font-size:9px;font-weight:800;padding:2px 9px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px}
+.diff-easy{background:var(–sky-bg);color:var(–sky);border:1px solid var(–sky-border)}
+.diff-med{background:var(–amber-bg);color:#8B5E00;border:1px solid var(–amber-border)}
+.diff-hard{background:var(–olive-bg);color:var(–olive);border:1px solid var(–olive-border)}
+.story-card{background:linear-gradient(135deg,var(–amber-bg),white);border:1.5px solid var(–amber-border);border-radius:20px;padding:17px;margin-bottom:20px;box-shadow:0 3px 14px rgba(255,191,0,.1)}
+.story-label{font-family:‘Caveat’,cursive;font-size:14px;font-weight:700;color:var(–olive);margin-bottom:9px}
+.story-quote{font-size:16px;color:var(–ink);line-height:1.75;font-family:‘Caveat’,cursive;font-weight:600;margin-bottom:8px}
+.story-by{font-size:11px;color:var(–muted);font-weight:600}
+.biz-cta-box{background:#1A4A7A;border-radius:22px;padding:20px;text-align:center;box-shadow:0 8px 28px rgba(26,74,122,.25)}
+.biz-cta-title{font-family:‘Nunito’,sans-serif;font-size:17px;font-weight:900;color:white;margin-bottom:5px}
+.biz-cta-sub{font-size:17px;color:rgba(255,255,255,.5);margin-bottom:16px;font-family:‘Caveat’,cursive;font-weight:600;line-height:1.6}
+.biz-cta-btn{background:var(–amber);color:#1A4A7A;padding:12px 26px;border:none;border-radius:50px;font-family:‘Nunito’,sans-serif;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 4px 16px rgba(255,191,0,.4);transition:transform .2s}
+.biz-cta-btn:hover{transform:scale(1.04)}
+
+/* ══════════════════════════
+SUBMIT
+══════════════════════════ */
+#submit{background:var(–cream);padding-bottom:90px}
+.submit-hdr{padding:14px 20px;display:flex;align-items:center;gap:13px}
+.sub-back{width:38px;height:38px;background:white;border:1.5px solid var(–border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(–ink);box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.sub-title{font-family:‘Nunito’,sans-serif;font-size:20px;font-weight:900;color:var(–ink)}
+.submit-body{padding:0 20px}
+.upload-area{border:2px dashed var(–border2);border-radius:20px;height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;margin-bottom:16px;transition:all .2s;background:var(–cream2)}
+.upload-area:hover{border-color:var(–amber);background:var(–amber-bg)}
+.upload-ico{font-size:30px}.upload-txt{font-size:12px;color:var(–muted);font-weight:600}
+.form-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(–muted);margin-bottom:5px;font-family:‘Quicksand’,sans-serif}
+.form-input{width:100%;background:white;border:1.5px solid var(–border);border-radius:14px;padding:12px 14px;font-family:‘Quicksand’,sans-serif;font-size:13px;color:var(–ink);outline:none;margin-bottom:12px;transition:border-color .2s;box-shadow:0 2px 6px rgba(0,0,0,.04);line-height:1.65}
+.form-input:focus{border-color:var(–amber)}.form-ta{min-height:72px;resize:none}
+.submit-btn{width:100%;background:#1A4A7A;color:var(–amber);border:none;padding:17px;border-radius:50px;font-family:‘Nunito’,sans-serif;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 6px 22px rgba(26,74,122,.25);margin-top:3px;transition:transform .2s}
+.submit-btn:hover{transform:scale(1.02)}
+.submit-note{text-align:center;font-size:16px;color:var(–muted);margin-top:9px;font-family:‘Caveat’,cursive;font-weight:600}.submit-note span{color:var(–sky);font-weight:700}
+
+/* ══════════════════════════
+PROFILE
+══════════════════════════ */
+#profile{background:var(–cream);padding-bottom:90px}
+.prof-hero{
+background:#1A4A7A;
+padding:16px 20px 28px;position:relative;overflow:hidden;
+}
+.prof-hero-glow{position:absolute;background:radial-gradient(circle,rgba(196,168,232,.25),transparent 60%);width:220px;height:220px;right:-40px;bottom:-40px}
+.prof-av{width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,var(–amber),var(–lav,#C4A8E8));display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:12px;border:3px solid rgba(255,255,255,.3);box-shadow:0 4px 16px rgba(196,168,232,.3);position:relative;z-index:2}
+.prof-name{font-family:‘Nunito’,sans-serif;font-size:22px;font-weight:900;color:white;margin-bottom:4px;position:relative;z-index:2}
+.prof-tag{font-size:16px;color:rgba(255,255,255,.4);position:relative;z-index:2;font-family:‘Caveat’,cursive;font-weight:600}.prof-tag span{color:var(–amber);font-weight:700}
+.prof-stats{display:flex;background:white;border:1.5px solid var(–border);margin:-12px 16px 0;border-radius:20px;overflow:hidden;position:relative;z-index:3;box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.pstat{flex:1;padding:14px 8px;text-align:center;border-right:1px solid var(–border)}.pstat:last-child{border-right:none}
+.pstat-v{font-family:‘Nunito’,sans-serif;font-size:18px;font-weight:900;color:var(–ink)}.pstat-l{font-size:9px;color:var(–muted);margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
+.prof-body{padding:20px 20px}
+.prof-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(–muted);margin-bottom:11px;font-family:‘Quicksand’,sans-serif}
+.makes-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.make-cell{background:white;border:1.5px solid var(–border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.make-cell:hover{box-shadow:0 6px 18px rgba(0,0,0,.1);transform:translateY(-2px)}
+.make-img{width:100%;height:84px;display:flex;align-items:center;justify-content:center;font-size:38px}
+.make-lbl{padding:8px 10px;font-size:11px;font-weight:700;color:var(–ink);font-family:‘Nunito’,sans-serif}
+.settings-list{background:white;border:1.5px solid var(–border);border-radius:20px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.05)}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(–border);font-size:13px;font-weight:600;color:var(–ink);cursor:pointer;transition:background .2s;font-family:‘Nunito’,sans-serif}
+.setting-row:last-child{border-bottom:none}.setting-row:hover{background:var(–cream2)}.setting-arr{color:var(–muted);font-size:15px}
+
+/* ══════════════════════════
+BOTTOM NAV
+══════════════════════════ */
+.bottom-nav{
+position:absolute;bottom:0;left:0;right:0;height:80px;
+background:rgba(254,252,245,.97);
+border-top:1.5px solid var(–border);
+display:flex;align-items:center;justify-content:space-around;
+padding:0 6px 14px;
+backdrop-filter:blur(20px);z-index:200;
+box-shadow:0 -4px 18px rgba(0,0,0,.07);
+}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:5px 10px;border-radius:14px;transition:all .2s}
+.nav-item:hover{background:var(–cream2)}
+.nav-ico{font-size:20px;opacity:.35;transition:all .2s}
+.nav-item.on .nav-ico{opacity:1}
+.nav-lbl{font-size:9px;color:var(–muted);font-weight:700;letter-spacing:.3px;text-transform:uppercase;font-family:‘Quicksand’,sans-serif;transition:color .2s}
+.nav-item.on .nav-lbl{color:#1A4A7A}
+/* Active indicator dot */
+.nav-item.on::after{content:’’;display:block;width:4px;height:4px;border-radius:50%;background:var(–sky);margin-top:-2px}
+
+/* ══ PROJECT CARD ILLUSTRATIONS ══ */
+/* These replace emoji placeholders with actual visual scenes */
+
+/* 🦀 Bottle Cap Crab — mosaic of circles on wood */
+.proj-crab{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(135deg,#8B5E3C,#6B4020);
+}
+.proj-crab::before{
+content:’’;position:absolute;inset:0;
+background:
+radial-gradient(circle 7px at 25% 35%, #E53030 0%,#E53030 100%),
+radial-gradient(circle 7px at 38% 30%, #FF6B00 0%,#FF6B00 100%),
+radial-gradient(circle 7px at 52% 28%, #CC2020 0%,#CC2020 100%),
+radial-gradient(circle 7px at 65% 33%, #FF4500 0%,#FF4500 100%),
+radial-gradient(circle 7px at 30% 50%, #FFB800 0%,#FFB800 100%),
+radial-gradient(circle 7px at 45% 48%, #E84020 0%,#E84020 100%),
+radial-gradient(circle 7px at 60% 45%, #CC1010 0%,#CC1010 100%),
+radial-gradient(circle 7px at 75% 50%, #FF6B00 0%,#FF6B00 100%),
+radial-gradient(circle 7px at 20% 65%, #2244AA 0%,#2244AA 100%),
+radial-gradient(circle 7px at 35% 68%, #336699 0%,#336699 100%),
+radial-gradient(circle 7px at 50% 65%, #1A3388 0%,#1A3388 100%),
+radial-gradient(circle 7px at 65% 68%, #2244CC 0%,#2244CC 100%),
+radial-gradient(circle 7px at 80% 65%, #334499 0%,#334499 100%),
+radial-gradient(circle 7px at 40% 82%, #009966 0%,#009966 100%),
+radial-gradient(circle 7px at 55% 80%, #00AA55 0%,#00AA55 100%),
+radial-gradient(circle 7px at 70% 82%, #008844 0%,#008844 100%);
+background-repeat:no-repeat;
+}
+.proj-crab::after{
+content:‘🦀’;position:absolute;bottom:4px;right:6px;
+font-size:22px;opacity:.3;transform:rotate(-10deg);
+}
+
+/* 🪵 Tiki Bar — wood planks + bamboo roof */
+.proj-tiki{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(180deg,#5BC0F8 0%,#5BC0F8 40%,#8B6914 40%,#6B4A0A 100%);
+}
+.proj-tiki::before{
+content:’’;position:absolute;
+width:100%;height:38px;
+top:26px;left:0;
+background:repeating-linear-gradient(90deg,#5C8A20 0px,#5C8A20 12px,#4A7010 12px,#4A7010 22px);
+border-radius:4px 4px 0 0;
+clip-path:polygon(0 100%,8% 0%,92% 0%,100% 100%);
+}
+.proj-tiki::after{
+content:’’;position:absolute;
+width:100%;bottom:0;height:48px;
+background:repeating-linear-gradient(180deg,#8B6914 0px,#8B6914 9px,#6B4A0A 9px,#6B4A0A 18px);
+}
+
+/* 💡 Edison Chandelier — bulbs hanging */
+.proj-bulb{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#0A2A50,#1A4A7A);
+}
+.proj-bulb::before{
+content:’’;position:absolute;inset:0;
+background:
+radial-gradient(ellipse 14px 18px at 30% 60%, #FFD060 0%,#FF9900 60%,transparent 100%),
+radial-gradient(ellipse 14px 18px at 50% 55%, #FFD060 0%,#FF9900 60%,transparent 100%),
+radial-gradient(ellipse 14px 18px at 70% 60%, #FFD060 0%,#FF9900 60%,transparent 100%),
+radial-gradient(circle 3px at 30% 35%, #888 0%,#888 100%),
+radial-gradient(circle 3px at 50% 30%, #888 0%,#888 100%),
+radial-gradient(circle 3px at 70% 35%, #888 0%,#888 100%);
+background-repeat:no-repeat;
+}
+.proj-bulb::after{
+content:’’;position:absolute;inset:0;
+background:
+linear-gradient(180deg,transparent 30%,transparent 34%,#666 34%,#666 37%,transparent 37%),
+radial-gradient(ellipse 60px 30px at 30% 70%,rgba(255,200,50,.15),transparent),
+radial-gradient(ellipse 60px 30px at 50% 65%,rgba(255,200,50,.12),transparent),
+radial-gradient(ellipse 60px 30px at 70% 70%,rgba(255,200,50,.15),transparent);
+}
+
+/* 🔧 Pipe Wrench Lamp — industrial silhouette */
+.proj-lamp{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#F0EDD8,#E0D8B0);
+}
+.proj-lamp::before{
+content:’’;position:absolute;
+width:8px;height:70%;
+background:linear-gradient(90deg,#888,#AAA,#888);
+bottom:0;left:50%;transform:translateX(-50%);
+border-radius:4px;
+}
+.proj-lamp::after{
+content:’’;position:absolute;
+width:50px;height:30px;
+background:linear-gradient(160deg,#999,#BBB);
+top:18%;left:50%;transform:translateX(-50%) rotate(-20deg);
+border-radius:8px 8px 4px 4px;
+box-shadow:0 4px 12px rgba(255,200,0,.4);
+clip-path:polygon(15% 100%,0% 40%,50% 0%,100% 40%,85% 100%);
+}
+
+/* 🚗 Hubcap Clock — circular metallic */
+.proj-hubcap{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(135deg,#D4E8B8,#B8D890);
+}
+.proj-hubcap::before{
+content:’’;position:absolute;
+width:64px;height:64px;border-radius:50%;
+background:conic-gradient(#C0C0C0 0deg,#E8E8E8 45deg,#A0A0A0 90deg,#E8E8E8 135deg,#C0C0C0 180deg,#E8E8E8 225deg,#A0A0A0 270deg,#E8E8E8 315deg,#C0C0C0 360deg);
+top:50%;left:50%;transform:translate(-50%,-52%);
+box-shadow:0 3px 12px rgba(0,0,0,.2);
+}
+.proj-hubcap::after{
+content:’’;position:absolute;
+width:12px;height:12px;border-radius:50%;
+background:#333;
+top:50%;left:50%;transform:translate(-50%,-52%);
+}
+
+/* 🧴 Shampoo Bottle Vase — silhouette shapes */
+.proj-vase{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#F5F0FF,#DDD0F0);
+}
+.proj-vase::before{
+content:’’;position:absolute;
+width:28px;height:58px;
+background:linear-gradient(160deg,#A070D0,#7040A0);
+bottom:10%;left:22%;border-radius:8px 8px 14px 14px;
+box-shadow:2px 0 8px rgba(160,112,208,.3);
+}
+.proj-vase::after{
+content:’’;position:absolute;
+width:22px;height:44px;
+background:linear-gradient(160deg,#C090E8,#9060C0);
+bottom:10%;left:52%;border-radius:6px 6px 10px 10px;
+box-shadow:2px 0 8px rgba(160,112,208,.3);
+}
+
+/* 🥤 Can Tab Curtain — chain link pattern */
+.proj-curtain{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#FFFCE0,#FFF3A0);
+}
+.proj-curtain::before{
+content:’’;position:absolute;inset:0;
+background:
+repeating-linear-gradient(0deg,transparent,transparent 10px,rgba(150,130,0,.15) 10px,rgba(150,130,0,.15) 12px),
+repeating-linear-gradient(90deg,transparent,transparent 14px,rgba(150,130,0,.15) 14px,rgba(150,130,0,.15) 16px);
+}
+.proj-curtain::after{
+content:’’;position:absolute;inset:0;
+background:repeating-linear-gradient(45deg,rgba(180,160,0,.08) 0px,rgba(180,160,0,.08) 8px,transparent 8px,transparent 16px);
+}
+
+/* 🦕 Egg Carton Dinos — bumpy texture + green */
+.proj-dino{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#E8F8F0,#C8ECD8);
+}
+.proj-dino::before{
+content:’’;position:absolute;inset:0;
+background:
+radial-gradient(ellipse 18px 12px at 20% 60%, #C8E8C0 0%,#A0C890 100%),
+radial-gradient(ellipse 18px 12px at 42% 55%, #B8DCA8 0%,#90B878 100%),
+radial-gradient(ellipse 18px 12px at 64% 60%, #C8E8C0 0%,#A0C890 100%),
+radial-gradient(ellipse 18px 12px at 86% 55%, #B8DCA8 0%,#90B878 100%),
+radial-gradient(ellipse 18px 12px at 31% 78%, #C0E0B0 0%,#98C088 100%),
+radial-gradient(ellipse 18px 12px at 53% 75%, #B8DCA8 0%,#90B878 100%),
+radial-gradient(ellipse 18px 12px at 75% 78%, #C8E8C0 0%,#A0C890 100%);
+background-repeat:no-repeat;
+}
+.proj-dino::after{
+content:‘🦕’;position:absolute;
+font-size:26px;top:12%;left:50%;transform:translateX(-50%);
+filter:drop-shadow(0 2px 4px rgba(0,100,50,.2));
+}
+
+/* 🔩 Hex Wind Chime — geometric shapes hanging */
+.proj-chime{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#EEF8FF,#D0E8F8);
+}
+.proj-chime::before{
+content:’’;position:absolute;inset:0;
+background:
+linear-gradient(180deg,transparent 15%,#C0C8D0 15%,#C0C8D0 17%,transparent 17%),
+radial-gradient(circle 8px at 25% 35%,#A8B8C8 0%,#8898A8 100%),
+radial-gradient(circle 8px at 45% 40%,#A8B8C8 0%,#8898A8 100%),
+radial-gradient(circle 8px at 65% 33%,#A8B8C8 0%,#8898A8 100%),
+radial-gradient(circle 8px at 80% 38%,#A8B8C8 0%,#8898A8 100%);
+background-repeat:no-repeat;
+}
+
+/* 🌊 Jellyfish Mobile — soft wavy shapes */
+.proj-jelly{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#E0F4FF,#B8E4FF);
+}
+.proj-jelly::before{
+content:’’;position:absolute;
+width:50px;height:28px;
+background:radial-gradient(ellipse,rgba(180,220,255,.8),rgba(120,180,240,.6));
+border-radius:50% 50% 0 0;
+top:20%;left:50%;transform:translateX(-50%);
+box-shadow:0 0 15px rgba(100,180,255,.4);
+}
+.proj-jelly::after{
+content:’’;position:absolute;inset:0;
+background:
+linear-gradient(180deg,transparent 46%,rgba(140,200,255,.3) 46%,rgba(140,200,255,.3) 48%,transparent 48%),
+linear-gradient(180deg,transparent 52%,rgba(140,200,255,.2) 52%,rgba(140,200,255,.2) 54%,transparent 54%),
+linear-gradient(180deg,transparent 58%,rgba(140,200,255,.15) 58%,rgba(140,200,255,.15) 60%,transparent 60%);
+}
+
+/* 🧱 LEGO Planter — colored blocks */
+.proj-lego{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#F5F5E8,#E8E8D0);
+}
+.proj-lego::before{
+content:’’;position:absolute;inset:0;
+background:
+linear-gradient(90deg,#E84040 0%,#E84040 24%,#4488FF 25%,#4488FF 49%,#44BB44 50%,#44BB44 74%,#FFCC00 75%,#FFCC00 100%),
+linear-gradient(180deg,transparent 40%,rgba(0,0,0,.08) 40%,rgba(0,0,0,.08) 44%,transparent 44%);
+background-repeat:no-repeat;
+height:40%;bottom:20%;
+}
+.proj-lego::after{
+content:’’;position:absolute;
+width:100%;height:35%;bottom:0;
+background:linear-gradient(160deg,#8B9B60,#6B7A40);
+}
+
+/* 🪴 Cinder Block Shelf — stacked blocks */
+.proj-shelf{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#F0EDE0,#E0D8C8);
+}
+.proj-shelf::before{
+content:’’;position:absolute;inset:0;
+background:
+linear-gradient(180deg,transparent 28%,#A8A090 28%,#A8A090 46%,transparent 46%),
+linear-gradient(180deg,transparent 54%,#9A9080 54%,#9A9080 72%,transparent 72%),
+linear-gradient(90deg,transparent 10%,#B8B0A0 10%,#B8B0A0 40%,transparent 40%,transparent 60%,#B8B0A0 60%,#B8B0A0 90%,transparent 90%);
+}
+
+/* 🎭 Cork Portrait — warm cork texture with grid */
+.proj-cork{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#D4985C,#B87840);
+}
+.proj-cork::before{
+content:’’;position:absolute;inset:0;
+background:
+repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0px,transparent 2px,transparent 12px),
+repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0px,transparent 2px,transparent 12px);
+}
+.proj-cork::after{
+content:’’;position:absolute;
+width:38px;height:48px;
+background:linear-gradient(160deg,#E8D0B0,#D0B080);
+top:50%;left:50%;transform:translate(-50%,-50%);
+border-radius:3px;
+box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+/* 🪑 Tire Swing — circle + rope */
+.proj-tire{
+width:100%;height:100%;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#C8E8A0,#A0C870);
+}
+.proj-tire::before{
+content:’’;position:absolute;
+width:4px;height:35%;
+background:#8B7040;
+top:0;left:50%;transform:translateX(-50%);
+}
+.proj-tire::after{
+content:’’;position:absolute;
+width:52px;height:52px;border-radius:50%;
+border:12px solid #333;
+top:34%;left:50%;transform:translateX(-50%);
+box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- ══ SPLASH ══ -->
+
+<div class="screen on" id="splash">
+  <div class="sp-glow1"></div>
+  <div class="sp-glow2"></div>
+  <div class="sp-shape1"></div>
+  <div class="sp-shape2"></div>
+  <div class="sp-shape3"></div>
+  <div class="sp-shape4"></div>
+  <div class="sp-eyebrow">✦ the creativity matchmaker</div>
+  <div class="sp-logo"><h1>Sparked</h1></div>
+  <div class="sp-rule"></div>
+  <div class="sp-tagline">Stop scrolling. Start making.</div>
+  <div class="sp-actions">
+    <button class="btn-primary" onclick="go('quiz')">Get Started →</button>
+    <button class="btn-ghost-dark" onclick="go('ready')">I already have an account</button>
+    <div class="sp-skip" onclick="go('home')">🎨 Just browse for now</div>
+  </div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+
+<div class="screen" id="quiz">
+  <div class="qz-bar">
+    <button class="bk" onclick="go('splash')">←</button>
+    <div class="sqz" onclick="go('home')">skip →</div>
+  </div>
+  <div class="qprog-wrap">
+    <div class="qprog-track"><div class="qprog-fill" id="qpf" style="width:20%"></div></div>
+  </div>
+  <div class="qctr" id="qctr">Question 1 of 5</div>
+  <div class="qbody">
+    <div class="qs on" id="q1">
+      <div class="qq">Who's making today?</div><div class="qh">We'll dial in the difficulty and vibe.</div>
+      <div class="qopts">
+        <div class="qopt" onclick="sel(this,'q1')"><span class="qi">🙋</span>Just me</div>
+        <div class="qopt" onclick="sel(this,'q1')"><span class="qi">👶</span>Me & my kids</div>
+        <div class="qopt" onclick="sel(this,'q1')"><span class="qi">👨‍👩‍👧‍👦</span>The whole family</div>
+        <div class="qopt" onclick="sel(this,'q1')"><span class="qi">🎉</span>Group / party</div>
+      </div>
+      <button class="qbtn" onclick="nxtQ(2,40)">Next →</button>
+    </div>
+    <div class="qs" id="q2">
+      <div class="qq">How much time do you have?</div><div class="qh">We only show what actually fits.</div>
+      <div class="qopts">
+        <div class="qopt" onclick="sel(this,'q2')"><span class="qi">⚡</span>Under 30 min</div>
+        <div class="qopt" onclick="sel(this,'q2')"><span class="qi">☕</span>1–2 hours</div>
+        <div class="qopt" onclick="sel(this,'q2')"><span class="qi">🌅</span>Half a day</div>
+        <div class="qopt" onclick="sel(this,'q2')"><span class="qi">🛠️</span>Full weekend project</div>
+      </div>
+      <button class="qbtn" onclick="nxtQ(3,60)">Next →</button>
+    </div>
+    <div class="qs" id="q3">
+      <div class="qq">What's your vibe right now?</div><div class="qh">No wrong answers — go with your gut.</div>
+      <div class="qopts">
+        <div class="qopt" onclick="sel(this,'q3')"><span class="qi">🧘</span>Chill & relaxing</div>
+        <div class="qopt" onclick="sel(this,'q3')"><span class="qi">💥</span>Wild & chaotic fun</div>
+        <div class="qopt" onclick="sel(this,'q3')"><span class="qi">🔨</span>Build something real</div>
+        <div class="qopt" onclick="sel(this,'q3')"><span class="qi">🌿</span>Nature & outdoors</div>
+      </div>
+      <button class="qbtn" onclick="nxtQ(4,80)">Next →</button>
+    </div>
+    <div class="qs" id="q4">
+      <div class="qq">What's your budget?</div><div class="qh">We estimate costs for every project.</div>
+      <div class="qopts">
+        <div class="qopt" onclick="sel(this,'q4')"><span class="qi">🆓</span>Free — use what I have</div>
+        <div class="qopt" onclick="sel(this,'q4')"><span class="qi">💵</span>Under $20</div>
+        <div class="qopt" onclick="sel(this,'q4')"><span class="qi">💳</span>$20–$60</div>
+        <div class="qopt" onclick="sel(this,'q4')"><span class="qi">🛍️</span>No limit</div>
+      </div>
+      <button class="qbtn" onclick="nxtQ(5,90)">Next →</button>
+    </div>
+    <div class="qs" id="q5">
+      <div class="qq">Skill level?</div><div class="qh">We calibrate the challenge just for you.</div>
+      <div class="qopts">
+        <div class="qopt" onclick="sel(this,'q5')"><span class="qi">🌱</span>First timer — total newbie</div>
+        <div class="qopt" onclick="sel(this,'q5')"><span class="qi">🔧</span>Done a few things before</div>
+        <div class="qopt" onclick="sel(this,'q5')"><span class="qi">⭐</span>Pretty confident</div>
+        <div class="qopt" onclick="sel(this,'q5')"><span class="qi">🏆</span>Seasoned maker</div>
+      </div>
+      <button class="qbtn" onclick="go('ready')">Find My Spark ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ READY ══ -->
+
+<div class="screen" id="ready">
+  <div class="ready-ring"></div>
+  <div class="ready-h">Your spark<br>is <span>ready.</span></div>
+  <div class="ready-sub">52 projects matched perfectly for you.<br>Let's go make something real. ✨</div>
+  <button class="btn-ready" onclick="go('home')">Show Me →</button>
+</div>
+
+<!-- ══ HOME ══ -->
+
+<div class="screen" id="home">
+  <div class="home-hdr">
+    <div class="home-hdr-row">
+      <div class="wordmark">Sparked</div>
+      <div class="hdr-btns">
+        <div class="hbtn" onclick="go('shopping')">🛒</div>
+        <div class="hbtn" onclick="go('profile')">😊</div>
+      </div>
+    </div>
+    <div class="searchbar"><span style="color:var(--muted)">⌕</span><input type="text" placeholder="Search projects, materials, vibes..."></div>
+  </div>
+
+  <div class="pills-row">
+    <div class="pill on">All</div><div class="pill">⚡ Quick</div><div class="pill">👶 Kids</div><div class="pill">🏠 Home</div><div class="pill">🌿 Outdoor</div><div class="pill">♻️ Upcycle</div><div class="pill">🪵 Build</div>
+  </div>
+
+  <!-- HERO -->
+
+  <div class="hero-card" onclick="go('project')">
+    <div class="hero-blob"></div>
+    <div class="hero-blob2"></div>
+    <div class="hero-emoji-bg">🦀</div>
+    <div class="hero-inner">
+      <div class="hero-badge">🔥 Project of the Week</div>
+      <div class="hero-title">Bottle Cap<br>Mosaic Crab</div>
+      <div class="hero-desc">200 saved bottle caps → stunning wall art. Zero waste, maximum wow.</div>
+      <div class="hero-chips"><span class="hchip">⏱ 3 hrs</span><span class="hchip">🆓 Free</span><span class="hchip">⭐⭐ Medium</span></div>
+      <button class="hero-btn">Make It ✦</button>
+    </div>
+  </div>
+
+  <div class="quick-row">
+    <div class="quick-card" onclick="go('project')"><div class="qic">🎲</div><div><div class="qlb">Feeling lucky</div><div class="qtxt">Surprise Me</div></div></div>
+    <div class="quick-card" onclick="go('quiz')"><div class="qic">🎯</div><div><div class="qlb">Personalize</div><div class="qtxt">Take Quiz</div></div></div>
+  </div>
+
+  <div class="sec-hdr"><div class="sec-title">Picked For You ✦</div><div class="sec-all">See all</div></div>
+  <div class="hscroll">
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-crab"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-a">🔥 Hot</span><span class="pt pt-m">Free</span></div><div class="pcard-title">Bottle Cap Mosaic Crab</div><div class="pcard-meta"><span class="pcard-mi">⭐⭐ Med</span><span class="pcard-mi">⏱ 3h</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-tiki" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-s">New</span></div><div class="pcard-title">Pallet Wood Tiki Bar</div><div class="pcard-meta"><span class="pcard-mi">⭐⭐⭐ Hard</span><span class="pcard-mi">💵 $30</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-bulb" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-d">Viral</span></div><div class="pcard-title">Edison Bulb Chandelier</div><div class="pcard-meta"><span class="pcard-mi">⭐⭐ Med</span><span class="pcard-mi">💵 $25</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-lamp" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-o">Build</span></div><div class="pcard-title">Pipe Wrench Lamp</div><div class="pcard-meta"><span class="pcard-mi">⭐⭐ Med</span><span class="pcard-mi">💵 $20</span></div></div></div>
+  </div>
+
+  <div class="sec-hdr"><div class="sec-title">Wildest Ideas 🤯</div><div class="sec-all">See all</div></div>
+  <div class="hscroll">
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-hubcap" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-o">Upcycle</span></div><div class="pcard-title">Hubcap Garden Clock</div><div class="pcard-meta"><span class="pcard-mi">⭐ Easy</span><span class="pcard-mi">💵 $8</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-vase" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-a">🤯 Wild</span></div><div class="pcard-title">Shampoo Bottle Vase</div><div class="pcard-meta"><span class="pcard-mi">⭐ Easy</span><span class="pcard-mi">🆓 Free</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-curtain" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-a">🤯 Wild</span></div><div class="pcard-title">Can Tab Chain Curtain</div><div class="pcard-meta"><span class="pcard-mi">⭐ Easy</span><span class="pcard-mi">🆓 Free</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-lego" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-s">Weekend</span></div><div class="pcard-title">LEGO-Style Planter Wall</div><div class="pcard-meta"><span class="pcard-mi">⭐⭐ Med</span><span class="pcard-mi">💵 $18</span></div></div></div>
+  </div>
+
+  <div class="sec-hdr"><div class="sec-title">Kids Zone 👾</div><div class="sec-all">See all</div></div>
+  <div class="wcard" onclick="go('project')"><div class="wcard-img"><div class="proj-dino" style="width:100%;height:100%"></div></div><div class="wcard-body"><div class="wcard-title">Egg Carton Dinosaur City</div><div class="wcard-sub">Ages 4+ · 45 min · Free</div><div class="ptags"><span class="pt pt-o">⭐ Easy</span><span class="pt pt-a">Kids Fave</span></div></div></div>
+  <div class="wcard" onclick="go('project')"><div class="wcard-img"><div class="proj-jelly" style="width:100%;height:100%"></div></div><div class="wcard-body"><div class="wcard-title">Plastic Bag Jellyfish Mobile</div><div class="wcard-sub">Ages 3+ · 30 min · Free</div><div class="ptags"><span class="pt pt-s">♻️ Eco</span></div></div></div>
+
+  <div class="sec-hdr" style="margin-top:8px"><div class="sec-title">Trending Now 📈</div><div class="sec-all">See all</div></div>
+  <div class="hscroll">
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-shelf" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-o">Trending</span></div><div class="pcard-title">Cinder Block Bookshelf</div><div class="pcard-meta"><span class="pcard-mi">⭐ Easy</span><span class="pcard-mi">💵 $15</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-chime" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-a">Trending</span></div><div class="pcard-title">Hex Nut Wind Chime</div><div class="pcard-meta"><span class="pcard-mi">⭐ Easy</span><span class="pcard-mi">💵 $5</span></div></div></div>
+    <div class="pcard" onclick="go('project')"><div class="pcard-img"><div class="proj-cork" style="width:100%;height:100%"></div></div><div class="pcard-body"><div class="ptags"><span class="pt pt-d">Trending</span></div><div class="pcard-title">Cork Board Portrait Art</div><div class="pcard-meta"><span class="pcard-mi">⭐⭐ Med</span><span class="pcard-mi">💵 $12</span></div></div></div>
+  </div>
+
+  <div class="sec-hdr" style="margin-top:8px"><div class="sec-title">Weekend Builds 🛠️</div><div class="sec-all">See all</div></div>
+  <div class="wcard" onclick="go('project')"><div class="wcard-img"><div class="proj-tiki" style="width:100%;height:100%"></div></div><div class="wcard-body"><div class="wcard-title">Pallet Wood Tiki Bar</div><div class="wcard-sub">Adults · Full weekend · ~$30</div><div class="ptags"><span class="pt pt-s">⭐⭐⭐ Hard</span><span class="pt pt-a">🔥 Epic</span></div></div></div>
+  <div class="wcard" onclick="go('project')"><div class="wcard-img"><div class="proj-tire" style="width:100%;height:100%"></div></div><div class="wcard-body"><div class="wcard-title">Swing Chair from Old Tires</div><div class="wcard-sub">All ages · Full day · $10</div><div class="ptags"><span class="pt pt-o">♻️ Upcycle</span><span class="pt pt-s">Weekend</span></div></div></div>
+  <div style="height:10px"></div>
+
+  <div class="bottom-nav">
+    <div class="nav-item on" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ PROJECT ══ -->
+
+<div class="screen" id="project">
+  <div class="proj-hero g1">
+    <div class="proj-crab" style="width:100%;height:100%;position:absolute;inset:0;z-index:1"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(255,191,0,.2),transparent)"></div>
+    <button class="proj-back" onclick="go('home')">←</button><button class="proj-save">🔖</button>
+  </div>
+  <div class="proj-body">
+    <div class="ptags" style="margin-bottom:10px"><span class="pt pt-a">🔥 Trending</span><span class="pt pt-o">♻️ Upcycle</span><span class="pt pt-m">Wall Art</span></div>
+    <div class="proj-title">Bottle Cap Mosaic Crab</div>
+    <div class="proj-stats">
+      <div class="stat-chip"><div class="stat-v">3 hrs</div><div class="stat-l">Time</div></div>
+      <div class="stat-chip"><div class="stat-v">Medium</div><div class="stat-l">Skill</div></div>
+      <div class="stat-chip"><div class="stat-v">Free</div><div class="stat-l">Cost</div></div>
+      <div class="stat-chip"><div class="stat-v">4.9 ⭐</div><div class="stat-l">Rating</div></div>
+    </div>
+    <div class="sec-lbl">Materials Needed</div>
+    <div class="mat-list">
+      <div class="mat-row"><div class="mat-chk" onclick="tChk(this)"></div><div class="mat-name">~200 bottle caps (saved)</div><div class="mat-buy" style="color:var(--muted);font-size:10px">Collect free</div></div>
+      <div class="mat-row"><div class="mat-chk on" onclick="tChk(this)">✓</div><div class="mat-name done">Plywood board 12"x12"</div><div class="mat-buy" style="color:var(--muted)">✓ Have it</div></div>
+      <div class="mat-row"><div class="mat-chk" onclick="tChk(this)"></div><div class="mat-name">E6000 adhesive glue</div><div class="mat-buy" onclick="go('shopping')">Buy →</div></div>
+      <div class="mat-row"><div class="mat-chk" onclick="tChk(this)"></div><div class="mat-name">Acrylic paint (assorted)</div><div class="mat-buy" onclick="go('shopping')">Buy →</div></div>
+      <div class="mat-row"><div class="mat-chk on" onclick="tChk(this)">✓</div><div class="mat-name done">Pencil + crab stencil</div><div class="mat-buy" style="color:var(--muted)">✓ Have it</div></div>
+      <div class="cost-row"><div class="cost-lbl">Est. cost for missing items</div><div class="cost-val">~$11</div></div>
+    </div>
+    <button class="shop-ghost" onclick="go('shopping')">🛒 Shop Missing Items</button>
+    <div class="sec-lbl" style="margin-top:8px">Steps</div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-txt">Sort caps by color into piles. More variety = more vivid crab.</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-txt">Draw a crab outline on plywood, marking zones for body, claws, legs.</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-txt">Paint caps in batches — reds/oranges for body, dark shades for claws.</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-txt">Glue each cap firmly cap-side up, section by section. Dry 24 hrs.</div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-txt">Add hanging loop and show the world your masterpiece! 🦀</div></div>
+    </div>
+    <button class="made-btn" onclick="go('rewards')">📸 I Made This! +50 pts</button>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ SHOPPING ══ -->
+
+<div class="screen" id="shopping">
+  <div style="padding:16px 20px 14px;background:var(--sky-bg);border-bottom:1px solid var(--sky-border)">
+    <div class="shop-title">Shopping List</div>
+    <div style="font-size:13px;color:var(--muted);font-family:'Caveat',cursive;font-size:16px">items across 2 projects</div>
+  </div>
+  <div style="padding:16px 0 0">
+    <div class="shop-grp"><div class="shop-grp-name">🦀 Bottle Cap Mosaic Crab</div>
+      <div class="shop-box">
+        <div class="shop-row"><div class="s-chk" onclick="tShop(this)"></div><div class="s-name">E6000 Adhesive Glue</div><div class="s-price">$5.99</div><div class="s-buy">Buy</div></div>
+        <div class="shop-row"><div class="s-chk" onclick="tShop(this)"></div><div class="s-name">Acrylic Paint Set (12 colors)</div><div class="s-price">$8.99</div><div class="s-buy">Buy</div></div>
+        <div class="shop-row"><div class="s-chk on" onclick="tShop(this)">✓</div><div class="s-name done">Plywood board 12"x12"</div><div class="s-price">$4.50</div><div class="s-buy">Buy</div></div>
+      </div>
+    </div>
+    <div class="shop-grp"><div class="shop-grp-name">🪵 Pallet Wood Tiki Bar</div>
+      <div class="shop-box">
+        <div class="shop-row"><div class="s-chk" onclick="tShop(this)"></div><div class="s-name">Wood screws (box of 100)</div><div class="s-price">$7.99</div><div class="s-buy">Buy</div></div>
+        <div class="shop-row"><div class="s-chk" onclick="tShop(this)"></div><div class="s-name">Outdoor wood stain — Teak</div><div class="s-price">$12.49</div><div class="s-buy">Buy</div></div>
+        <div class="shop-row"><div class="s-chk" onclick="tShop(this)"></div><div class="s-name">Bamboo thatching roll</div><div class="s-price">$18.00</div><div class="s-buy">Buy</div></div>
+      </div>
+    </div>
+    <div class="total-bar"><div><div class="total-lbl">Remaining total</div></div><div class="total-val">$53.46</div></div>
+    <div style="height:12px"></div>
+    <button class="shop-all-btn">Shop All Items →</button>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ REWARDS ══ -->
+
+<div class="screen" id="rewards">
+  <div class="rew-hero">
+    <div class="rew-glow"></div>
+    <div style="padding-top:8px;font-size:11px;font-weight:700;letter-spacing:.3px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:10px">9:41 ●●●</div>
+    <div class="rew-title">Your Rewards 🏆</div>
+    <div class="rew-sub">keep making to earn more sparks ✨</div>
+    <div class="pts-card"><div><div class="pts-num">1,240</div><div class="pts-lbl">Spark Points</div></div><div class="pts-ico">✨</div></div>
+  </div>
+  <div class="rew-body">
+    <div class="rew-lbl">Current Giveaway</div>
+    <div class="giveaway-box"><div class="gw-badge">✦ Win This Month</div><div class="gw-title">Premium Maker Bundle ($75 value)</div><div class="gw-bar"><div class="gw-fill"></div></div><div class="gw-meta"><span>1,240 / 2,000 pts</span><span>18 days left</span></div></div>
+    <div class="rew-lbl">Your Badges</div>
+    <div class="badge-grid">
+      <div class="badge-cell"><div class="badge-ico">🔥</div><div class="badge-name">First Spark</div></div>
+      <div class="badge-cell"><div class="badge-ico">🎨</div><div class="badge-name">Creator</div></div>
+      <div class="badge-cell"><div class="badge-ico">⚡</div><div class="badge-name">Quick Make</div></div>
+      <div class="badge-cell locked"><div class="badge-ico">🌟</div><div class="badge-name">5 Projects</div></div>
+      <div class="badge-cell locked"><div class="badge-ico">👑</div><div class="badge-name">Top 10</div></div>
+      <div class="badge-cell locked"><div class="badge-ico">🏆</div><div class="badge-name">Streak 7</div></div>
+    </div>
+    <div class="rew-lbl">How To Earn</div>
+    <div class="earn-list">
+      <div class="earn-row"><span>📸 Complete a project</span><span class="earn-pts">+50</span></div>
+      <div class="earn-row"><span>📅 7-day streak</span><span class="earn-pts">+100</span></div>
+      <div class="earn-row"><span>✨ Submit a community craft</span><span class="earn-pts">+75</span></div>
+      <div class="earn-row"><span>🤝 Refer a friend</span><span class="earn-pts">+200</span></div>
+      <div class="earn-row"><span>🏅 Reach top 10</span><span class="earn-pts">+150</span></div>
+    </div>
+    <div class="rew-lbl">Milestones 🎯</div>
+    <div class="milestone-list">
+      <div class="ms done"><div class="ms-ico">🔥</div><div class="ms-info"><div class="ms-title">First Spark</div><div class="ms-reward">Complete your first project</div></div><div class="ms-badge d">✓ Done</div></div>
+      <div class="ms done"><div class="ms-ico">🎨</div><div class="ms-info"><div class="ms-title">Getting Creative</div><div class="ms-reward">5 projects → Exclusive packs</div></div><div class="ms-badge d">✓ Done</div></div>
+      <div class="ms current"><div class="ms-ico">⭐</div><div class="ms-info"><div class="ms-title">Maker in Progress</div><div class="ms-reward">10 projects → Free Premium month</div></div><div class="ms-badge c">In Progress</div></div>
+      <div class="ms locked"><div class="ms-ico">📦</div><div class="ms-info"><div class="ms-title">Craft Addict</div><div class="ms-reward">25 projects → Free kit mailed</div></div><div class="ms-badge l">Locked</div></div>
+      <div class="ms locked"><div class="ms-ico">🏆</div><div class="ms-info"><div class="ms-title">Master Maker</div><div class="ms-reward">50 projects → Featured profile</div></div><div class="ms-badge l">Locked</div></div>
+      <div class="ms locked"><div class="ms-ico">👑</div><div class="ms-info"><div class="ms-title">Sparked Legend</div><div class="ms-reward">100 projects → Lifetime Premium FREE</div></div><div class="ms-badge l">Locked</div></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item on"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ LEADERBOARD ══ -->
+
+<div class="screen" id="leaderboard">
+  <div class="lb-hdr">
+    <div class="lb-glow"></div>
+    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">9:41 ●●●</div>
+    <div class="lb-title">Spark Board 🏅</div>
+    <div class="lb-sub">Weekly rankings · Resets every Monday</div>
+    <div class="lb-tabs"><button class="lb-tab on">Weekly</button><button class="lb-tab">Monthly</button><button class="lb-tab">All Time</button></div>
+  </div>
+  <div class="prize-bar"><div class="prize-ico">🎁</div><div><div class="prize-t">Top 3 this week win a free craft kit!</div><div class="prize-s">$75 Bundle · 4 days left</div></div></div>
+  <div class="podium">
+    <div class="pod p2"><div class="pod-av">🧑</div><div class="pod-name">Jamie L.</div><div class="pod-pts">3,890</div><div class="pod-block">2</div></div>
+    <div class="pod p1"><div class="pod-av"><span class="pod-crown">👑</span>👩</div><div class="pod-name">Sarah K.</div><div class="pod-pts">5,210</div><div class="pod-block">1</div></div>
+    <div class="pod p3"><div class="pod-av">🧔</div><div class="pod-name">Marco R.</div><div class="pod-pts">3,120</div><div class="pod-block">3</div></div>
+  </div>
+  <div class="lb-list">
+    <div class="lb-row"><div class="lb-rank">4</div><div class="lb-av" style="background:var(--deep-bg)">👧</div><div style="flex:1"><div class="lb-name">Priya M.</div><div class="lb-made">18 projects</div></div><div class="lb-score">2,880</div></div>
+    <div class="lb-row"><div class="lb-rank">5</div><div class="lb-av" style="background:var(--sky-bg)">🧑</div><div style="flex:1"><div class="lb-name">Devon T.</div><div class="lb-made">15 projects</div></div><div class="lb-score">2,450</div></div>
+    <div class="lb-row"><div class="lb-rank">6</div><div class="lb-av" style="background:var(--olive-bg)">👩</div><div style="flex:1"><div class="lb-name">Lily C.</div><div class="lb-made">13 projects</div></div><div class="lb-score">2,100</div></div>
+    <div class="lb-row you"><div class="lb-rank">12</div><div class="lb-av" style="background:var(--amber-bg)">😊</div><div style="flex:1"><div class="lb-name">Alex Maker<span class="you-badge">You</span></div><div class="lb-made">12 projects · 1,240 pts</div></div><div class="lb-score">1,240</div></div>
+    <div class="lb-climb">Make <span>3 more projects</span> to reach rank 9 🎯</div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ COMMUNITY ══ -->
+
+<div class="screen" id="community">
+  <div class="comm-hdr">
+    <div class="comm-title">Community</div>
+    <div class="comm-sub">where makers share & inspire each other ✦</div>
+    <div class="comm-tabs"><div class="comm-tab on">Trending</div><div class="comm-tab">New</div><div class="comm-tab">Following</div><div class="comm-tab">Featured</div></div>
+  </div>
+  <div style="height:14px"></div>
+  <div class="post-card">
+    <div class="post-img" style="padding:0"><div class="proj-crab" style="width:100%;height:100%"></div></div>
+    <div class="post-body">
+      <div class="post-user"><div class="post-av" style="background:var(--amber-bg)">👩</div><div class="post-uname">Sarah K.</div><div class="post-time">2h ago</div><div class="featured-tag">⭐ Featured</div></div>
+      <div class="post-title">My Bottle Cap Crab Took Over the Living Room 🦀</div>
+      <div class="post-desc">Saved caps for 3 months. Kids painted half of them. They point at it every single day.</div>
+      <div class="post-actions"><div class="pact liked" onclick="this.classList.toggle('liked')">❤️ 412</div><div class="pact">💬 67</div><div class="pact">🔗</div><div class="pact makeit" onclick="go('project')">▶ Make It</div></div>
+    </div>
+  </div>
+  <div class="post-card">
+    <div class="post-img" style="padding:0"><div class="proj-tiki" style="width:100%;height:100%"></div></div>
+    <div class="post-body">
+      <div class="post-user"><div class="post-av" style="background:var(--sky-bg)">🧑</div><div class="post-uname">Devon T.</div><div class="post-time">Yesterday</div></div>
+      <div class="post-title">Built a Tiki Bar from Trash Pallets 🍹</div>
+      <div class="post-desc">6 free Craigslist pallets + $28. Weekend project. Neighbors want one now.</div>
+      <div class="post-actions"><div class="pact" onclick="this.classList.toggle('liked')">❤️ 284</div><div class="pact">💬 43</div><div class="pact">🔗</div><div class="pact makeit" onclick="go('project')">▶ Make It</div></div>
+    </div>
+  </div>
+  <div class="post-card">
+    <div class="post-img" style="padding:0"><div class="proj-lamp" style="width:100%;height:100%"></div></div>
+    <div class="post-body">
+      <div class="post-user"><div class="post-av" style="background:var(--deep-bg)">👧</div><div class="post-uname">Priya M.</div><div class="post-time">2 days ago</div></div>
+      <div class="post-title">Pipe Wrench Floor Lamp ✨</div>
+      <div class="post-desc">$2 garage sale wrenches. Strangest, coolest lamp I've ever owned.</div>
+      <div class="post-actions"><div class="pact" onclick="this.classList.toggle('liked')">❤️ 198</div><div class="pact">💬 31</div><div class="pact">🔗</div><div class="pact makeit" onclick="go('project')">▶ Make It</div></div>
+    </div>
+  </div>
+  <div class="post-card">
+    <div class="post-img" style="padding:0"><div class="proj-dino" style="width:100%;height:100%"></div></div>
+    <div class="post-body">
+      <div class="post-user"><div class="post-av" style="background:var(--olive-bg)">👨</div><div class="post-uname">Mike & Kids</div><div class="post-time">3 days ago</div></div>
+      <div class="post-title">Egg Carton Dino City — 47 Dinosaurs!</div>
+      <div class="post-desc">Saved cartons 6 weeks. My 5-year-old named every single one. Zero screen time Saturday.</div>
+      <div class="post-actions"><div class="pact" onclick="this.classList.toggle('liked')">❤️ 521</div><div class="pact">💬 88</div><div class="pact">🔗</div><div class="pact makeit" onclick="go('project')">▶ Make It</div></div>
+    </div>
+  </div>
+  <button class="fab" onclick="go('submit')">+</button>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item on"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ BUSINESS ══ -->
+
+<div class="screen" id="business">
+  <div class="biz-hdr">
+    <div class="biz-title">Earn From Making 🌿</div>
+    <div class="biz-sub">Turn your hobby into a little extra income</div>
+    <div class="biz-tag-pill">🌱 Optional · No pressure</div>
+  </div>
+  <div class="biz-body">
+    <div class="biz-intro-card">
+      <div class="biz-intro-title">Your craft has real value. 🌿</div>
+      <div class="biz-intro-body">You're already making awesome things. Here are a few low-key ways some Sparked makers turn that into side income. No hustle culture — just options.</div>
+    </div>
+    <div class="ways-label">Ways to Earn</div>
+    <div class="ways-nudge">Pick what feels right — no pressure to do it all</div>
+    <div class="earn-cards">
+      <div class="earn-card"><div class="earn-ico a">🛍️</div><div class="earn-info"><div class="earn-title">Sell on Etsy or Facebook</div><div class="earn-desc">List your finished pieces. Upcycled art and handmade decor sell really well.</div><div class="earn-footer"><div class="earn-range">$25–$300+ per piece</div><div class="diff-tag diff-easy">Easy Start</div></div></div></div>
+      <div class="earn-card"><div class="earn-ico s">📸</div><div class="earn-info"><div class="earn-title">Post Your Process</div><div class="earn-desc">Short "how I made this" videos on TikTok or Reels. Makers go viral all the time.</div><div class="earn-footer"><div class="earn-range">Ad revenue + brand deals</div><div class="diff-tag diff-easy">Easy Start</div></div></div></div>
+      <div class="earn-card"><div class="earn-ico d">🎨</div><div class="earn-info"><div class="earn-title">Teach a Workshop</div><div class="earn-desc">Host a 2-hour craft night at a local coffee shop or community center.</div><div class="earn-footer"><div class="earn-range">$15–$40 per person</div><div class="diff-tag diff-med">Some Setup</div></div></div></div>
+      <div class="earn-card"><div class="earn-ico o">📦</div><div class="earn-info"><div class="earn-title">Sell a DIY Kit</div><div class="earn-desc">Bundle materials + your instructions. Ship it or sell locally.</div><div class="earn-footer"><div class="earn-range">$20–$60 per kit</div><div class="diff-tag diff-med">Some Setup</div></div></div></div>
+      <div class="earn-card"><div class="earn-ico a">🏪</div><div class="earn-info"><div class="earn-title">Local Markets & Pop-Ups</div><div class="earn-desc">Farmers markets, craft fairs, holiday pop-ups. Great for face-to-face.</div><div class="earn-footer"><div class="earn-range">$200–$1,500+ per event</div><div class="diff-tag diff-hard">More Effort</div></div></div></div>
+    </div>
+    <div class="story-card">
+      <div class="story-label">✦ A real Sparked maker</div>
+      <div class="story-quote">"I listed my first bottle cap mosaic on Etsy as a joke. Sold in 2 days for $85. Now I make 4–6 a month alongside my regular job."</div>
+      <div class="story-by">— Jamie L. · Sparked member since 2024</div>
+    </div>
+    <div class="biz-cta-box">
+      <div class="biz-cta-title">Ready to take the next step?</div>
+      <div class="biz-cta-sub">Tell us what you make and we'll suggest the best path for you.</div>
+      <button class="biz-cta-btn">Get Personalized Tips →</button>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item on"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ SUBMIT ══ -->
+
+<div class="screen" id="submit">
+  <div class="submit-hdr"><button class="sub-back" onclick="go('community')">←</button><div class="sub-title">Share Your Make ✦</div></div>
+  <div class="submit-body">
+    <div class="upload-area"><div class="upload-ico">📷</div><div class="upload-txt">Tap to add photos</div><div style="font-size:11px;color:var(--muted)">Up to 6 photos</div></div>
+    <div class="form-label">Project Title</div><input type="text" class="form-input" placeholder="What did you make?">
+    <div class="form-label">Description</div><textarea class="form-input form-ta" placeholder="Tell the community — tips, story, how it went..."></textarea>
+    <div class="form-label">Category</div>
+    <select class="form-input"><option>🎨 Arts & Crafts</option><option>♻️ Upcycling / Trash Art</option><option>🪵 Woodworking</option><option>🌿 Garden & Outdoor</option><option>🏠 Home Decor</option><option>👶 Kids Projects</option><option>💡 Lighting</option></select>
+    <div class="form-label">Difficulty</div>
+    <select class="form-input"><option>⭐ Beginner</option><option>⭐⭐ Intermediate</option><option>⭐⭐⭐ Advanced</option></select>
+    <button class="submit-btn" onclick="go('community')">Share with Community ✦</button>
+    <div class="submit-note">Earn <span>+75 pts</span> when your craft gets approved</div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item" onclick="go('profile')"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+<!-- ══ PROFILE ══ -->
+
+<div class="screen" id="profile">
+  <div class="prof-hero">
+    <div class="prof-hero-glow"></div>
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.25);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;position:relative;z-index:2">9:41 ●●●</div>
+    <div class="prof-av">😊</div>
+    <div class="prof-name">Alex Maker</div>
+    <div class="prof-tag">Sparked since 2025 · <span>Premium ✦</span></div>
+  </div>
+  <div class="prof-stats">
+    <div class="pstat"><div class="pstat-v">12</div><div class="pstat-l">Made</div></div>
+    <div class="pstat"><div class="pstat-v">1,240</div><div class="pstat-l">Points</div></div>
+    <div class="pstat"><div class="pstat-v">5</div><div class="pstat-l">Badges</div></div>
+    <div class="pstat"><div class="pstat-v">7🔥</div><div class="pstat-l">Streak</div></div>
+  </div>
+  <div class="prof-body" style="margin-top:20px">
+    <div class="prof-lbl">My Makes 📸</div>
+    <div class="makes-grid">
+      <div class="make-cell" onclick="go('project')"><div class="make-img"><div class="proj-crab" style="width:100%;height:100%"></div></div><div class="make-lbl">Bottle Cap Crab</div></div>
+      <div class="make-cell" onclick="go('project')"><div class="make-img"><div class="proj-tiki" style="width:100%;height:100%"></div></div><div class="make-lbl">Tiki Bar</div></div>
+      <div class="make-cell" onclick="go('project')"><div class="make-img"><div class="proj-bulb" style="width:100%;height:100%"></div></div><div class="make-lbl">Edison Chandelier</div></div>
+      <div class="make-cell" onclick="go('project')"><div class="make-img"><div class="proj-dino" style="width:100%;height:100%"></div></div><div class="make-lbl">Dino City</div></div>
+    </div>
+    <div class="prof-lbl">Settings ⚙️</div>
+    <div class="settings-list">
+      <div class="setting-row"><span>✦ Upgrade to Premium</span><span class="setting-arr">›</span></div>
+      <div class="setting-row"><span>🎯 Update Quiz Preferences</span><span class="setting-arr">›</span></div>
+      <div class="setting-row"><span>🔔 Notifications</span><span class="setting-arr">›</span></div>
+      <div class="setting-row"><span>🤝 Refer a Friend</span><span class="setting-arr">›</span></div>
+      <div class="setting-row"><span>🚪 Log Out</span><span class="setting-arr">›</span></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="go('home')"><div class="nav-ico">🏠</div><div class="nav-lbl">Home</div></div>
+    <div class="nav-item" onclick="go('community')"><div class="nav-ico">👥</div><div class="nav-lbl">Community</div></div>
+    <div class="nav-item" onclick="go('business')"><div class="nav-ico">🌿</div><div class="nav-lbl">Earn</div></div>
+    <div class="nav-item" onclick="go('rewards')"><div class="nav-ico">🏆</div><div class="nav-lbl">Rewards</div></div>
+    <div class="nav-item on"><div class="nav-ico">👤</div><div class="nav-lbl">Profile</div></div>
+  </div>
+</div>
+
+</div><!-- /phone -->
+<script>
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));const t=document.getElementById(id);if(t){t.classList.add('on');t.scrollTop=0}}
+function sel(el,g){document.querySelectorAll('#'+g+' .qopt').forEach(o=>o.classList.remove('sl'));el.classList.add('sl')}
+function nxtQ(n,p){document.querySelectorAll('.qs').forEach(s=>s.classList.remove('on'));document.getElementById('q'+n).classList.add('on');document.getElementById('qpf').style.width=p+'%';document.getElementById('qctr').textContent='Question '+n+' of 5'}
+function tChk(el){el.classList.toggle('on');const nm=el.nextElementSibling,by=nm.nextElementSibling;el.classList.contains('on')?(el.textContent='✓',nm.classList.add('done'),by.textContent='✓ Have it',by.style.color='var(--muted)',by.style.cursor='default'):(el.textContent='',nm.classList.remove('done'),by.textContent='Buy →',by.style.color='var(--sky)',by.style.cursor='pointer')}
+function tShop(el){el.classList.toggle('on');const n=el.nextElementSibling;el.classList.contains('on')?(el.textContent='✓',n.classList.add('done')):(el.textContent='',n.classList.remove('done'))}
+document.querySelectorAll('.pill').forEach(p=>p.addEventListener('click',()=>{document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on')}));
+document.querySelectorAll('.comm-tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.comm-tab').forEach(x=>x.classList.remove('on'));t.classList.add('on')}));
+document.querySelectorAll('.lb-tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.lb-tab').forEach(x=>x.classList.remove('on'));t.classList.add('on')}));
+</script>
+</body>
+</html>
